@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "Shared.Protos";
+
+package product;
+
+service ProductGrpc {
+  rpc GetProduct (GetProductRequest) returns (ProductResponse);
+}
+
+message GetProductRequest {
+  int32 id = 1;
+}
+
+message ProductResponse {
+  int32 id = 1;
+  string name = 2;
+  double price = 3;
+}
