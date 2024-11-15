@@ -1,4 +1,5 @@
-using Order.Service.Producers;
+using Messaging.Interfaces;
+using Messaging.RabbitMQ;
 using Shared.Protos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +15,8 @@ builder.Services.AddGrpcClient<ProductGrpc.ProductGrpcClient>(o =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IMessageProducer, ProductProducer>();
-
+builder.Services.AddSingleton<IMessageProducer, RabbitMQProducer>(sp =>
+    RabbitMQProducer.CreateAsync("localhost").GetAwaiter().GetResult());
 
 var app = builder.Build();
 

@@ -1,6 +1,6 @@
+using Messaging.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Order.Service.DTOs;
-using Order.Service.Producers;
 using Shared.Protos;
 
 namespace Order.Service.Controllers
@@ -29,7 +29,7 @@ namespace Order.Service.Controllers
                 TotalPrice = productResponse.Price * request.Quantity
             };
 
-            _messageProducer.SendMessage(order);
+            await _messageProducer.SendMessageAsync("order", "order.created", order);
 
             return Ok(order);
         }
